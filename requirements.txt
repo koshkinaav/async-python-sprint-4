@@ -1,6 +1,9 @@
-
-fastapi==0.79.0
+tortoise-orm==0.17.3
+asyncpg==0.26.0
+fastapi~=0.109.0
 orjson==3.4.1
 pydantic==1.9.0
-uvicorn==0.18.2
+uvicorn~=0.27.0
 uvloop==0.14.0; sys_platform != "win32" and implementation_name == "cpython"
+sqlalchemy~=2.0.25
+tortoise~=0.1.1
