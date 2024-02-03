@@ -1,45 +1,9 @@
-# import sys
-# import logging
-#
-# from tortoise import Tortoise, run_async, functions
-# from models.models import ShortUrl
-#
-# # Для отображения SQL-запросов в консоли настроим логирование
-# fmt = logging.Formatter(
-#     fmt="%(asctime)s - %(name)s:%(lineno)d - %(levelname)s - %(message)s",
-#     datefmt="%Y-%m-%d %H:%M:%S",
-# )
-# sh = logging.StreamHandler(sys.stdout)
-# sh.setLevel(logging.DEBUG)
-# sh.setFormatter(fmt)
-#
-# logger_db_client = logging.getLogger("db_client")
-# logger_db_client.setLevel(logging.DEBUG)
-# logger_db_client.addHandler(sh)
-#
-#
-# async def main():
-#
-#     DSN = "postgres://alex:xxx@localhost:5432/short_urls"
-#     await Tortoise.init(
-#         db_url=DSN,
-#         modules={'models': ['models.models']}
-#     )
-#     await Tortoise.generate_schemas()
-#     url = await ShortUrl.get(id=short_url.id)
-#     print(url)
-#
-# run_async(main())
-import logging
-
 import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 from tortoise.contrib.fastapi import register_tortoise
-from tortoise import Tortoise
-from core import config
-from core.logger import LOGGING
-from api.v1 import base
+from src.api.v1 import base
+from src.core import config
 
 app = FastAPI(
     # Конфигурируем название проекта. Оно будет отображаться в документации
@@ -53,7 +17,7 @@ app = FastAPI(
     default_response_class=ORJSONResponse,
 )
 
-app.include_router(base.router, prefix='/api/v1')
+app.include_router(base.router, prefix='')
 
 register_tortoise(
     app,

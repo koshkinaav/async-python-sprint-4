@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: short_urls
+      POSTGRES_USER: alex
+      POSTGRES_PASSWORD: xxx
+    ports:
+      - "5432:5432"
