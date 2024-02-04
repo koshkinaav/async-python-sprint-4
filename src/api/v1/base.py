@@ -26,7 +26,7 @@ async def ping_db() -> dict:
 
 
 @router.post('/api/v1/url', status_code=status.HTTP_201_CREATED)
-async def create_shorturl(request: Request, url: str):
+async def create_shorturl(request: Request, url: str) -> dict:
     ip = request.client.host
     if not await is_ip_in_black_list(ip):
         try:
@@ -39,7 +39,11 @@ async def create_shorturl(request: Request, url: str):
                     'short_url': f'http://localhost:8000/{short_url.short_url}'
                 }
             else:
-                return await ShortUrl.filter(url=url).first()
+                short_url_created = await ShortUrl.filter(url=url).first()
+                return {
+                    'short_url': 'http://localhost:8000/' + short_url_created.short_url,
+                    'created_date': short_url_created.created_date
+                }
         except Exception as e:
             logging.exception(f"Raised exception: {e}")
             raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
