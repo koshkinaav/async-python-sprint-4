@@ -104,10 +104,18 @@ GET /<shorten-url-id>/status?[full-info]&[max-result=10]&[offset=0]
 6. Покройте написанный код тестами.
 
 ## Решение
-В директории проекта выполните 
+Добавлены Response Model в base.py
+
+В директории проекта выполните для создания БД
 
 ```bash
-docker compose up --build
+docker run -d \
+    --name postgres \
+    -e POSTGRES_DB=short_urls \
+    -e POSTGRES_USER=alex \
+    -e POSTGRES_PASSWORD=xxx \
+    -p 5432:5432 \
+    postgres:latest
 ```
 Затем можно запустить сервер
 ```bash
